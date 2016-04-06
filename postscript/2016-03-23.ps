@@ -1,0 +1,72 @@
+%!ps
+
+% startkoordinaten
+/x 100 def
+/y 300 def
+/w 150 def 
+
+
+% startposition
+x y moveto
+
+% festhaus
+newpath 
+	x y moveto
+	100 0 rlineto
+	0 100 rlineto
+	-50 50 rlineto
+	-50 -50 rlineto
+	100 0 rlineto
+	-100 -100 rlineto
+	0 100 rlineto
+	100 -100 rlineto
+stroke
+
+% startposition
+
+
+0.4 0.4 0.4 setrgbcolor
+
+% haus
+newpath 
+	x 200 add y 200 add moveto
+	w 0 rlineto
+	0 w rlineto
+	w -1 mul 0 rlineto
+	0 w -1 mul rlineto
+fill
+
+newpath 
+	x 200 add y 200 add moveto
+	w 2 mul  rlineto
+fill
+
+% schornstein
+newpath
+	x 200 add y 200 add moveto
+	w -2 div w 1.5 mul moveto
+	-20 0 rlineto
+stroke
+
+
+% horns
+newpath 250 370 moveto -50 40 rlineto 250 310 lineto fill
+newpath 350 370 moveto  50 40 rlineto 350 310 lineto fill
+
+1 0 0 setrgbcolor
+
+% face
+newpath 300 300 100 0 360 arc fill
+
+0 0 0 setrgbcolor
+
+% eyes
+newpath 250 350 10 0 360 arc fill
+newpath 325 325 moveto 350 350 lineto stroke
+
+% smile
+newpath 300 300 70 230 350 arc stroke
+
+% comment
+showpage
+quit

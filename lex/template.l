@@ -1,0 +1,7 @@
+Definitionen
+
+%% 
+Regeln
+
+%%
+C-Code
