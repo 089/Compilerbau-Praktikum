@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# usage .start.sh filename 
+# usage .start.sh regex-rules-file < data-input-file 
 
 SCRIPTNAME=$0
 FILENAME=${1%.*}
