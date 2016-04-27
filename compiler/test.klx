@@ -1,6 +1,7 @@
-    Linie; 
-  [100@200] Kreis;
-  [200@300] Kreis;
+    [Koord 200 500] Linie; 
+  [Farbe 255 227 127 Koord 100 200] Kreis;
+  [Koord 100 400 Skalieren 100] Kreis;
+  
 Kreis;
 # test
 #Kreis;
@@ -8,4 +9,4 @@ Linie;
 
 // hello
 
-fehler
+
