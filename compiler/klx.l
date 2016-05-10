@@ -20,6 +20,7 @@ Farbe                                       return FARBE;       // Farben
 Rot                                         return ROT;
 Blau                                        return BLAU;
 Gruen                                       return GRUEN;
+Gelb                                        return GELB;
 Orange                                      return ORANGE;
 Lila                                        return LILA;
 Pink                                        return PINK;

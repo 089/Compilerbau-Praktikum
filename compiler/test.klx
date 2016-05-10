@@ -1,25 +1,26 @@
-    [Farbe 255 0 0 Koord 200 500 Skalieren 200] Linie; 
-  [Farbe 255 227 127 Koord 100 200] Kreis;
-[Koord 100 400 Skalieren 100] Kreis;
-    [Koord 100 600 Skalieren 200 Farbe 67 200 67] Dreieck;
-Kreis;
-# test
-#Kreis;
-[Farbe Grau] Linie;
-[Koord 200 100] Quadrat;
+[Koord 300 400 Skalieren 10] Quadrat; 
+[Koord 300 400 Farbe 255 155 55] Quadrat; 
 
-[Koord 100 0 Farbe Rot] Quadrat;
-[Koord 150 50 Farbe Blau] Quadrat;
-[Koord 200 100 Farbe Gruen] Quadrat;
-[Koord 250 150 Farbe Orange] Quadrat;
-[Koord 300 200 Farbe Lila] Quadrat;
-[Koord 350 250 Farbe Pink] Quadrat;
-[Koord 400 300 Farbe Schwarz] Quadrat;
-[Koord 450 350 Farbe Braun] Quadrat;
-[Koord 500 400 Drehen 45 Farbe Grau] Quadrat;
-
-[Koord 200 600 Drehen 170 Farbe Rot Skalieren 400] Dreieck;
-
-// hello
+      
+    # [Farbe 255 0 0 Koord 200 500 Skalieren 200] Linie; 
+    # [Farbe 255 227 127 Koord 100 200] Kreis;
+    # [Koord 100 400 Skalieren 100] Kreis;
+    # [Koord 100 600 Skalieren 200 Farbe 67 200 67] Dreieck;
+    # Kreis;
+    # test
+    # Kreis;
+    # [Farbe Grau] Linie;
+    # [Koord 200 100] Quadrat;
+    # [Koord 100 0 Farbe Rot] Quadrat;
+    # [Koord 150 50 Farbe Blau] Quadrat;
+    # [Koord 200 100 Farbe Gruen] Quadrat;
+    # [Koord 250 150 Farbe Orange] Quadrat;
+    # [Koord 300 200 Farbe Lila] Quadrat;
+    # [Koord 350 250 Farbe Pink] Quadrat;
+    # [Koord 400 300 Farbe Schwarz] Quadrat;
+    # [Koord 450 350 Farbe Braun] Quadrat;
+    # [Koord 500 400 Drehen 45 Farbe Grau] Quadrat;
+    # [Koord 200 600 Drehen 170 Farbe Rot Skalieren (200+200)] Dreieck;
+    // hello
 
 
