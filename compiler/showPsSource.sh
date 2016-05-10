@@ -6,6 +6,9 @@ do
     # nur bei Änderungen ausführen:
     inotifywait -q -e modify ./;
 
-    # make ausführen
-    make
+    # clean screen
+    clear
+    
+    # ps Datei ausgeben
+    cat test.ps
 done

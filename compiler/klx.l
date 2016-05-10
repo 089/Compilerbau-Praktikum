@@ -1,26 +1,58 @@
 %{
+#include "klx.tab.h"
 extern int yylval;
 %}
 
 %option yylineno
 
 %%
-Kreis                                       return 1; // warnung return 0 bei EOF
-;                                           return 2;
-Linie                                       return 3;
-\[                                          return 4;
-\]                                          return 5;
-@                                           return 6;
-0|[1-9][0-9]* yylval=atoi(yytext);          return 7;
-Farbe                                       return 8;
-Skalieren                                   return 9; 
-Koord                                       return 10;
+Kreis                                       return KREIS;       // Geometrie; Warnung return 0 bei EOF
+Linie                                       return LINIE;
+Dreieck                                     return DREIECK; 
+Quadrat                                     return QUADRAT;
 
-\n          ;           // Zeilenumbruch ignorieren[
-[[:space:]] ;         // Leerzeichen ignorieren
-#.*         ;           // Kommentare
-\/\/.*      ;        // Kommentare
-.           fprintf(stderr, "WARNING: '(%d) %s' ignored\n", yylineno, yytext);
+Drehen                                      return DREHEN;      // Transformationen
+Skalieren                                   return SKALIEREN;
+Koord                                       return KOORD;
+
+
+Farbe                                       return FARBE;       // Farben
+Rot                                         return ROT;
+Blau                                        return BLAU;
+Gruen                                       return GRUEN;
+Orange                                      return ORANGE;
+Lila                                        return LILA;
+Pink                                        return PINK;
+Schwarz                                     return SCHWARZ;
+Braun                                       return BRAUN;
+Grau                                        return GRAU;
+
+
+;                                           return SEMIKOLON;   // Gruppierungszeichen
+\[                                          return EKO;
+\]                                          return EKS;
+@                                           return TRENNZEICHEN;
+\(                                          return RKO;
+\)                                          return RKS;
+
+
+\+                                          return ADD;        // Mathezeugs
+\*                                          return MUL;
+\-                                          return SUB;
+\/                                          return DIV;
+\^                                          return EXP;
+\%                                          return MOD;
+
+
+
+0|[1-9][0-9]* yylval=atoi(yytext);          return NUMBER;
+
+
+\n                                          ;                  // Zeilenumbruch ignorieren[
+[[:space:]]                                 ;                  // Leerzeichen ignorieren
+#.*                                         ;                  // Kommentare
+\/\/.*                                      ;                  // Kommentare
+.                                           fprintf(stderr, "WARNING: '(%d) %s' ignored\n", yylineno, yytext);
 
 
 %%
