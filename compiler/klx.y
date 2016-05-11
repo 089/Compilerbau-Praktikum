@@ -1,16 +1,22 @@
 %{
 #include <stdio.h>
+#include "symtab.h"
 extern int yylineno;
 %}
 
 %define parse.error verbose
 
+%union { int i; node *n; double d; }
+
 %token KREIS LINIE DREIECK QUADRAT
 %token KOORD SKALIEREN DREHEN
-%token SEMIKOLON EKO EKS TRENNZEICHEN RKO RKS
+%token SEMIKOLON EKO EKS TRENNZEICHEN RKO RKS ASSIGN
 %token FARBE ROT BLAU GELB GRUEN ORANGE LILA PINK SCHWARZ BRAUN GRAU
 %token ADD SUB MUL DIV EXP MOD
-%token NUMBER
+%token <i> NUMBER
+%token <n> ID
+%token <d> FLOAT
+
 
 %%
 program: header stmtlist trailer;
@@ -21,7 +27,8 @@ trailer: { printf("\nshowpage\nquit"); };
 stmtlist: ;
 stmtlist: stmtlist stmt;
 
-stmt: {printf("gsave\n");} options klecks {printf("grestore\n");};
+stmt: ID ASSIGN expr SEMIKOLON { printf("/klx_%s exch def\n", $1->symbol); };
+stmt: { printf("gsave\n"); } options klecks { printf("grestore\n"); };
 
 options: ;
 options: EKO optionlist EKS;
@@ -29,23 +36,24 @@ options: EKO optionlist EKS;
 optionlist: option; 
 optionlist: optionlist option;
 
-option: KOORD expr expr             {printf("%d %d translate\n", $2, $3);};
-option: FARBE expr expr expr        {printf("%f %f %f setrgbcolor\n", $2/255.0, $3/255.0, $4/255.0);};
-option: FARBE ROT                   {printf("%f %f %f setrgbcolor\n", 255/255.0, 0/255.0, 0/255.0);};
-option: FARBE BLAU                  {printf("%f %f %f setrgbcolor\n", 0/255.0, 0/255.0, 255/255.0);};
-option: FARBE GRUEN                 {printf("%f %f %f setrgbcolor\n", 0/255.0, 255/255.0, 0/255.0);};
-option: FARBE GELB                  {printf("%f %f %f setrgbcolor\n", 255/255.0, 255/255.0, 0/255.0);};
-option: FARBE ORANGE                {printf("%f %f %f setrgbcolor\n", 255/255.0, 127/255.0, 0/255.0);};
-option: FARBE LILA                  {printf("%f %f %f setrgbcolor\n", 255/255.0, 0/255.0, 255/255.0);};
-option: FARBE PINK                  {printf("%f %f %f setrgbcolor\n", 255/255.0, 0/255.0, 180/255.0);};
-option: FARBE SCHWARZ               {printf("%f %f %f setrgbcolor\n", 0/255.0, 0/255.0, 0/255.0);};
-option: FARBE BRAUN                 {printf("%f %f %f setrgbcolor\n", 139/255.0, 69/255.0, 19/255.0);};
-option: FARBE GRAU                  {printf("%f %f %f setrgbcolor\n", 128/255.0, 128/255.0, 128/255.0);};
+option: KOORD expr expr             { printf("translate\n"); };
 
-option: SKALIEREN expr              {printf("%f %f scale\n", $2/100.0, $2/100.0);};
-option: SKALIEREN expr expr         {printf("%f %f scale\n", $2/100.0, $3/100.0);};
+option: SKALIEREN expr expr         { printf("scale\n"); };
 
-option: DREHEN expr                 {printf("\n%d rotate\n", ($2 % 360));};
+option: DREHEN expr                 { printf("rotate\n"); };
+
+option: FARBE expr expr expr        { printf("setrgbcolor\n"); };
+
+option: FARBE ROT                   { printf("%f %f %f setrgbcolor\n", 255/255.0, 0/255.0, 0/255.0); };
+option: FARBE BLAU                  { printf("%f %f %f setrgbcolor\n", 0/255.0, 0/255.0, 255/255.0); };
+option: FARBE GRUEN                 { printf("%f %f %f setrgbcolor\n", 0/255.0, 255/255.0, 0/255.0); };
+option: FARBE GELB                  { printf("%f %f %f setrgbcolor\n", 255/255.0, 255/255.0, 0/255.0); };
+option: FARBE ORANGE                { printf("%f %f %f setrgbcolor\n", 255/255.0, 127/255.0, 0/255.0); };
+option: FARBE LILA                  { printf("%f %f %f setrgbcolor\n", 255/255.0, 0/255.0, 255/255.0); };
+option: FARBE PINK                  { printf("%f %f %f setrgbcolor\n", 255/255.0, 0/255.0, 180/255.0); };
+option: FARBE SCHWARZ               { printf("%f %f %f setrgbcolor\n", 0/255.0, 0/255.0, 0/255.0); };
+option: FARBE BRAUN                 { printf("%f %f %f setrgbcolor\n", 139/255.0, 69/255.0, 19/255.0); };
+option: FARBE GRAU                  { printf("%f %f %f setrgbcolor\n", 128/255.0, 128/255.0, 128/255.0); };
 
 klecks:   KREIS SEMIKOLON           { printf("newpath 0 0 50 0 360 arc fill\n"); }; 
         | LINIE SEMIKOLON           { printf("newpath -50 0 moveto 100 0 rlineto stroke\n"); }; 
@@ -69,7 +77,9 @@ signed: ADD atomic;
 signed: SUB atomic { printf("neg "); };
 signed: atomic;
 
+atomic: ID { printf("klx_%s ", $1->symbol); }; 
 atomic: NUMBER { printf("%d ", $1); };
+atomic: FLOAT { printf("%f ", $1); };
 atomic: RKO expr RKS;
 
 %% 

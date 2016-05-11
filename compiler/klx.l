@@ -1,6 +1,6 @@
 %{
+#include "symtab.h"
 #include "klx.tab.h"
-extern int yylval;
 %}
 
 %option yylineno
@@ -44,9 +44,17 @@ Grau                                        return GRAU;
 \^                                          return EXP;
 \%                                          return MOD;
 
+=                                           return ASSIGN;
+
+[a-zA-Z]+ {     yylval.n = lookup(yytext);                       // Variablen
+                if(yylval.n == NULL) yylval.n = insert(yytext);
+                
+                return ID;        
+            }
 
 
-0|[1-9][0-9]* yylval=atoi(yytext);          return NUMBER;
+0|[1-9][0-9]* yylval.i=atoi(yytext);        return NUMBER;
+0|[1-9][0-9]*\.[0-9]+ yylval.d=atof(yytext);return FLOAT;
 
 
 \n                                          ;                  // Zeilenumbruch ignorieren[

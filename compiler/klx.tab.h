@@ -58,30 +58,40 @@ extern int yydebug;
     TRENNZEICHEN = 268,
     RKO = 269,
     RKS = 270,
-    FARBE = 271,
-    ROT = 272,
-    BLAU = 273,
-    GELB = 274,
-    GRUEN = 275,
-    ORANGE = 276,
-    LILA = 277,
-    PINK = 278,
-    SCHWARZ = 279,
-    BRAUN = 280,
-    GRAU = 281,
-    ADD = 282,
-    SUB = 283,
-    MUL = 284,
-    DIV = 285,
-    EXP = 286,
-    MOD = 287,
-    NUMBER = 288
+    ASSIGN = 271,
+    FARBE = 272,
+    ROT = 273,
+    BLAU = 274,
+    GELB = 275,
+    GRUEN = 276,
+    ORANGE = 277,
+    LILA = 278,
+    PINK = 279,
+    SCHWARZ = 280,
+    BRAUN = 281,
+    GRAU = 282,
+    ADD = 283,
+    SUB = 284,
+    MUL = 285,
+    DIV = 286,
+    EXP = 287,
+    MOD = 288,
+    NUMBER = 289,
+    ID = 290,
+    FLOAT = 291
   };
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+typedef union YYSTYPE YYSTYPE;
+union YYSTYPE
+{
+#line 9 "klx.y" /* yacc.c:1909  */
+ int i; node *n; double d; 
+
+#line 94 "klx.tab.h" /* yacc.c:1909  */
+};
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif

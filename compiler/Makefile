@@ -1,8 +1,8 @@
 
 all: klx test.ps
 
-klx: lex.yy.c klx.tab.c klx.tab.h 
-	gcc lex.yy.c klx.tab.c -lfl -o klx
+klx: lex.yy.c klx.tab.c klx.tab.h symtab.h symtab.c
+	gcc lex.yy.c klx.tab.c symtab.c -lfl -o klx
 
 lex.yy.c: klx.l
 	flex klx.l

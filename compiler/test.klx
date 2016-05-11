@@ -1,26 +1,35 @@
-[Koord 300 400 Skalieren 10] Quadrat; 
-[Koord 300 400 Farbe 255 155 55] Quadrat; 
 
-      
-    # [Farbe 255 0 0 Koord 200 500 Skalieren 200] Linie; 
-    # [Farbe 255 227 127 Koord 100 200] Kreis;
-    # [Koord 100 400 Skalieren 100] Kreis;
-    # [Koord 100 600 Skalieren 200 Farbe 67 200 67] Dreieck;
-    # Kreis;
-    # test
-    # Kreis;
-    # [Farbe Grau] Linie;
-    # [Koord 200 100] Quadrat;
-    # [Koord 100 0 Farbe Rot] Quadrat;
-    # [Koord 150 50 Farbe Blau] Quadrat;
-    # [Koord 200 100 Farbe Gruen] Quadrat;
-    # [Koord 250 150 Farbe Orange] Quadrat;
-    # [Koord 300 200 Farbe Lila] Quadrat;
-    # [Koord 350 250 Farbe Pink] Quadrat;
-    # [Koord 400 300 Farbe Schwarz] Quadrat;
-    # [Koord 450 350 Farbe Braun] Quadrat;
-    # [Koord 500 400 Drehen 45 Farbe Grau] Quadrat;
-    # [Koord 200 600 Drehen 170 Farbe Rot Skalieren (200+200)] Dreieck;
-    // hello
+x = 100;
+
+[Koord 300 300 Skalieren (190 + 10) (190 + 10) Farbe Rot] Quadrat;
+
+# [Koord 300 x  Farbe 155/255 155/255 55*2+1/255 Drehen 180 - 45 + 66 % 360] Quadrat; 
+  
+# [Koord 200 500 Skalieren 200 ] Linie; 
+# [Farbe 255 227 127 Koord 100 200] Kreis;
+# [Koord 100 400 Skalieren 100] Kreis;
+# [Koord 100 600 Skalieren 200 Farbe 67 200 67] Dreieck;
+Kreis;
+Kreis;
+# [Farbe Grau] Linie;
+# [Koord 200 100] Quadrat;
+# [Koord 100 0 Farbe Rot] Quadrat;
+# [Koord 150 50 Farbe Blau] Quadrat;
+# [Koord 200 100 Farbe Gruen] Quadrat;
+# [Koord 250 150 Farbe Orange] Quadrat;
+# [Koord 300 200 Farbe Lila] Quadrat;
+# [Koord 350 250 Farbe Pink] Quadrat;
+# [Koord 400 300 Farbe Schwarz] Quadrat;
+# [Koord 450 350 Farbe Braun] Quadrat;
+# [Koord 500 400 Drehen 45 Farbe Grau] Quadrat;
+# [Koord 200 600 Drehen 170 Farbe Rot Skalieren (200+200)] Dreieck;
+// hello
 
 
+# todos 11.05.2016
+# 1. floating point numbers --> atomic
+# 1. double atof(const char *nprt) --> string to double --> %f
+# 1. define before use policy; z.B. VAR x; --> neues stmt: ID ECCL; $1->defined = 1;
+#   - if $1->defined dann ...
+#   - --> zusätzliche int initialized in symtab.h
+# 
