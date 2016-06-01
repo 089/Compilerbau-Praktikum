@@ -1,17 +1,9 @@
 %!PS-Adobe
+0 /klx_x def
+0 /klx_y def
 100 /klx_x exch def
+2 10 exp 8 div /klx_y exch def
 gsave
-300 300 translate
-190 10 add 90 10 add scale
-1.000000 0.000000 0.000000 setrgbcolor
-newpath -50 -50 moveto 0 100 rlineto 100 0 rlineto 0 -100 rlineto -100 0 rlineto stroke
-grestore
-gsave
-newpath 0 0 50 0 360 arc fill
-grestore
-gsave
-newpath 0 0 50 0 360 arc fill
-grestore
-
-showpage
-quit
+klx_x klx_y translate
+200 dup scale
+1.100000 0 

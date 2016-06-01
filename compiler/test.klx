@@ -1,35 +1,38 @@
 
+Deklariere x;
+Deklariere y;
 x = 100;
+y = 2^10 / 8;
 
-[Koord 300 300 Skalieren (190 + 10) (190 + 10) Farbe Rot] Quadrat;
+Wenn x Kleiner 10  dann
+    [Koord x, y Skalieren 200 Farbe 1.1, 0.5, 0.33] Dreieck;
 
-# [Koord 300 x  Farbe 155/255 155/255 55*2+1/255 Drehen 180 - 45 + 66 % 360] Quadrat; 
+
+# [Koord 100, 600 Skalieren 200, 200 Farbe 1.1, 0.5, 0.33] Dreieck;
+
+# [Koord 300, 300 Skalieren 2.9, (190 + 10)/100 Farbe Rot] Quadrat;
+
+# [Koord 300, x  Farbe 155/255, 155/255, 55*2+1/255 Drehen 180 - 45 + 66 % 360] Quadrat; 
   
-# [Koord 200 500 Skalieren 200 ] Linie; 
-# [Farbe 255 227 127 Koord 100 200] Kreis;
-# [Koord 100 400 Skalieren 100] Kreis;
-# [Koord 100 600 Skalieren 200 Farbe 67 200 67] Dreieck;
-Kreis;
-Kreis;
-# [Farbe Grau] Linie;
-# [Koord 200 100] Quadrat;
-# [Koord 100 0 Farbe Rot] Quadrat;
-# [Koord 150 50 Farbe Blau] Quadrat;
-# [Koord 200 100 Farbe Gruen] Quadrat;
-# [Koord 250 150 Farbe Orange] Quadrat;
-# [Koord 300 200 Farbe Lila] Quadrat;
-# [Koord 350 250 Farbe Pink] Quadrat;
-# [Koord 400 300 Farbe Schwarz] Quadrat;
-# [Koord 450 350 Farbe Braun] Quadrat;
-# [Koord 500 400 Drehen 45 Farbe Grau] Quadrat;
-# [Koord 200 600 Drehen 170 Farbe Rot Skalieren (200+200)] Dreieck;
-// hello
+# [Koord 200, 500 Skalieren 3, 3] Linie; 
 
+# [Farbe Rot Koord 100, 200] Kreis;
 
-# todos 11.05.2016
-# 1. floating point numbers --> atomic
-# 1. double atof(const char *nprt) --> string to double --> %f
-# 1. define before use policy; z.B. VAR x; --> neues stmt: ID ECCL; $1->defined = 1;
-#   - if $1->defined dann ...
-#   - --> zusätzliche int initialized in symtab.h
-# 
+# [Koord 100, 400 Skalieren 1, 2 Farbe Lila] Kreis;
+
+# [Farbe Grau Koord 0, 600] Linie;
+# [Koord x, y] Quadrat;
+# [Koord x, (y - 70) Drehen 45 Farbe Grau] Quadrat;
+# [Koord (x + 10), (y + 10) Farbe Rot] Quadrat;
+# [Koord (x + 20), (y + 20) Farbe Gelb] Quadrat;
+# [Koord (x + 30), (y + 30) Farbe Blau] Quadrat;
+# [Koord (x + 40), (y + 40) Farbe Gruen] Quadrat;
+# [Koord (x + 50), (y + 50) Farbe Orange] Quadrat;
+# [Koord (x + 60), (y + 60) Farbe Lila] Quadrat;
+# [Koord (x + 70), (y + 70) Farbe Pink] Quadrat;
+# [Koord (x + 80), (y + 80) Farbe Schwarz] Quadrat;
+# [Koord (x + 90), (y + 90) Farbe Braun] Quadrat;
+
+# [Koord 200, 600 Drehen 170 % 360 Farbe Rot Skalieren 3] Dreieck;
+
+# hello

@@ -34,7 +34,7 @@
 # define YY_YY_KLX_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
-# define YYDEBUG 0
+# define YYDEBUG 1
 #endif
 #if YYDEBUG
 extern int yydebug;
@@ -59,26 +59,27 @@ extern int yydebug;
     RKO = 269,
     RKS = 270,
     ASSIGN = 271,
-    FARBE = 272,
-    ROT = 273,
-    BLAU = 274,
-    GELB = 275,
-    GRUEN = 276,
-    ORANGE = 277,
-    LILA = 278,
-    PINK = 279,
-    SCHWARZ = 280,
-    BRAUN = 281,
-    GRAU = 282,
-    ADD = 283,
-    SUB = 284,
-    MUL = 285,
-    DIV = 286,
-    EXP = 287,
-    MOD = 288,
-    NUMBER = 289,
-    ID = 290,
-    FLOAT = 291
+    DEKLARIERE = 272,
+    FARBE = 273,
+    ROT = 274,
+    BLAU = 275,
+    GELB = 276,
+    GRUEN = 277,
+    ORANGE = 278,
+    LILA = 279,
+    PINK = 280,
+    SCHWARZ = 281,
+    BRAUN = 282,
+    GRAU = 283,
+    ADD = 284,
+    SUB = 285,
+    MUL = 286,
+    DIV = 287,
+    EXP = 288,
+    MOD = 289,
+    NUMBER = 290,
+    ID = 291,
+    FLOAT = 292
   };
 #endif
 
@@ -90,7 +91,7 @@ union YYSTYPE
 #line 9 "klx.y" /* yacc.c:1909  */
  int i; node *n; double d; 
 
-#line 94 "klx.tab.h" /* yacc.c:1909  */
+#line 95 "klx.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

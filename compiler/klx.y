@@ -11,8 +11,10 @@ extern int yylineno;
 %token KREIS LINIE DREIECK QUADRAT
 %token KOORD SKALIEREN DREHEN
 %token SEMIKOLON EKO EKS TRENNZEICHEN RKO RKS ASSIGN
+%token DEKLARIERE
 %token FARBE ROT BLAU GELB GRUEN ORANGE LILA PINK SCHWARZ BRAUN GRAU
 %token ADD SUB MUL DIV EXP MOD
+%token WENN, DANN, KLEINER
 %token <i> NUMBER
 %token <n> ID
 %token <d> FLOAT
@@ -27,7 +29,31 @@ trailer: { printf("\nshowpage\nquit"); };
 stmtlist: ;
 stmtlist: stmtlist stmt;
 
-stmt: ID ASSIGN expr SEMIKOLON { printf("/klx_%s exch def\n", $1->symbol); };
+stmt: WENN boolexpr DANN { printf("{"); } stmt { printf("}"); } { printf("if\n "); };
+
+
+stmt: DEKLARIERE ID SEMIKOLON {
+        // Deklaration von Variablen
+        if($2->defined == 0) {
+            $2->defined = 1;
+            printf("0 /klx_%s def\n", $2->symbol);        
+        } else {
+            char meldung[500];
+            snprintf(meldung, 500, "Variable '%s' ist bereits deklariert.", $2->symbol);
+            yyerror(meldung);
+        }
+    }; 
+    
+stmt: ID ASSIGN expr SEMIKOLON { 
+        if($1->defined == 1) {
+            printf("/klx_%s exch def\n", $1->symbol); 
+        } else {
+            char meldung[500];
+            snprintf(meldung, 500, "Variable '%s' muss deklariert werden, bevor sie verwendet werden kann.", $1->symbol);
+            yyerror(meldung);
+        }
+    }; 
+
 stmt: { printf("gsave\n"); } options klecks { printf("grestore\n"); };
 
 options: ;
@@ -36,13 +62,14 @@ options: EKO optionlist EKS;
 optionlist: option; 
 optionlist: optionlist option;
 
-option: KOORD expr expr             { printf("translate\n"); };
+option: KOORD expr TRENNZEICHEN expr             { printf("translate\n"); };
 
-option: SKALIEREN expr expr         { printf("scale\n"); };
+option: SKALIEREN expr TRENNZEICHEN expr         { printf("scale\n"); };
+option: SKALIEREN expr                           { printf("dup scale\n"); };
 
 option: DREHEN expr                 { printf("rotate\n"); };
 
-option: FARBE expr expr expr        { printf("setrgbcolor\n"); };
+option: FARBE expr TRENNZEICHEN expr TRENNZEICHEN expr        { printf("setrgbcolor\n"); };
 
 option: FARBE ROT                   { printf("%f %f %f setrgbcolor\n", 255/255.0, 0/255.0, 0/255.0); };
 option: FARBE BLAU                  { printf("%f %f %f setrgbcolor\n", 0/255.0, 0/255.0, 255/255.0); };
@@ -61,6 +88,8 @@ klecks:   KREIS SEMIKOLON           { printf("newpath 0 0 50 0 360 arc fill\n");
         | QUADRAT SEMIKOLON         { printf("newpath -50 -50 moveto 0 100 rlineto 100 0 rlineto 0 -100 rlineto -100 0 rlineto stroke\n"); }; 
 
 
+boolexpr: expr KLEINER expr { printf("lt "); };
+
 expr: product;
 expr: expr ADD product { printf("add "); };
 expr: expr SUB product { printf("sub "); };
@@ -77,7 +106,16 @@ signed: ADD atomic;
 signed: SUB atomic { printf("neg "); };
 signed: atomic;
 
-atomic: ID { printf("klx_%s ", $1->symbol); }; 
+atomic: ID { 
+        if($1->defined == 1) {
+            printf("klx_%s ", $1->symbol); 
+        } else {
+            char meldung[500];
+            snprintf(meldung, 500, "Variable '%s' muss deklariert werden, bevor sie verwendet werden kann.", $1->symbol);
+            yyerror(meldung);
+        }
+    }; 
+
 atomic: NUMBER { printf("%d ", $1); };
 atomic: FLOAT { printf("%f ", $1); };
 atomic: RKO expr RKS;
@@ -89,8 +127,8 @@ int yyerror(char *msg) {
     return 0;
 }
 
-
 int main(void) {
+    yydebug=0;
     yyparse();
     return 0;    
 }

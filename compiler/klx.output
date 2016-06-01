@@ -1,0 +1,1045 @@
+Grammatik
+
+    0 $accept: program $end
+
+    1 program: header stmtlist trailer
+
+    2 header: %empty
+
+    3 trailer: %empty
+
+    4 stmtlist: %empty
+    5         | stmtlist stmt
+
+    6 stmt: DEKLARIERE ID SEMIKOLON
+    7     | ID ASSIGN expr SEMIKOLON
+
+    8 $@1: %empty
+
+    9 stmt: $@1 options klecks
+
+   10 options: %empty
+   11        | EKO optionlist EKS
+
+   12 optionlist: option
+   13           | optionlist option
+
+   14 option: KOORD expr TRENNZEICHEN expr
+   15       | SKALIEREN expr TRENNZEICHEN expr
+   16       | SKALIEREN expr
+   17       | DREHEN expr
+   18       | FARBE expr TRENNZEICHEN expr TRENNZEICHEN expr
+   19       | FARBE ROT
+   20       | FARBE BLAU
+   21       | FARBE GRUEN
+   22       | FARBE GELB
+   23       | FARBE ORANGE
+   24       | FARBE LILA
+   25       | FARBE PINK
+   26       | FARBE SCHWARZ
+   27       | FARBE BRAUN
+   28       | FARBE GRAU
+
+   29 klecks: KREIS SEMIKOLON
+   30       | LINIE SEMIKOLON
+   31       | DREIECK SEMIKOLON
+   32       | QUADRAT SEMIKOLON
+
+   33 expr: product
+   34     | expr ADD product
+   35     | expr SUB product
+   36     | expr MOD product
+
+   37 product: exponent
+   38        | product MUL exponent
+   39        | product DIV exponent
+
+   40 exponent: signed EXP signed
+   41         | signed
+
+   42 signed: ADD atomic
+   43       | SUB atomic
+   44       | atomic
+
+   45 atomic: ID
+   46       | NUMBER
+   47       | FLOAT
+   48       | RKO expr RKS
+
+
+Terminale und die Regeln, in denen sie verwendet werden
+
+$end (0) 0
+error (256)
+KREIS (258) 29
+LINIE (259) 30
+DREIECK (260) 31
+QUADRAT (261) 32
+KOORD (262) 14
+SKALIEREN (263) 15 16
+DREHEN (264) 17
+SEMIKOLON (265) 6 7 29 30 31 32
+EKO (266) 11
+EKS (267) 11
+TRENNZEICHEN (268) 14 15 18
+RKO (269) 48
+RKS (270) 48
+ASSIGN (271) 7
+DEKLARIERE (272) 6
+FARBE (273) 18 19 20 21 22 23 24 25 26 27 28
+ROT (274) 19
+BLAU (275) 20
+GELB (276) 22
+GRUEN (277) 21
+ORANGE (278) 23
+LILA (279) 24
+PINK (280) 25
+SCHWARZ (281) 26
+BRAUN (282) 27
+GRAU (283) 28
+ADD (284) 34 42
+SUB (285) 35 43
+MUL (286) 38
+DIV (287) 39
+EXP (288) 40
+MOD (289) 36
+NUMBER (290) 46
+ID (291) 6 7 45
+FLOAT (292) 47
+
+
+Nicht-Terminal und die Regeln, in denen sie verwendet werden
+
+$accept (38)
+    auf der linken Seite: 0
+program (39)
+    auf der linken Seite: 1, auf der rechten Seite: 0
+header (40)
+    auf der linken Seite: 2, auf der rechten Seite: 1
+trailer (41)
+    auf der linken Seite: 3, auf der rechten Seite: 1
+stmtlist (42)
+    auf der linken Seite: 4 5, auf der rechten Seite: 1 5
+stmt (43)
+    auf der linken Seite: 6 7 9, auf der rechten Seite: 5
+$@1 (44)
+    auf der linken Seite: 8, auf der rechten Seite: 9
+options (45)
+    auf der linken Seite: 10 11, auf der rechten Seite: 9
+optionlist (46)
+    auf der linken Seite: 12 13, auf der rechten Seite: 11 13
+option (47)
+    auf der linken Seite: 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+    28, auf der rechten Seite: 12 13
+klecks (48)
+    auf der linken Seite: 29 30 31 32, auf der rechten Seite: 9
+expr (49)
+    auf der linken Seite: 33 34 35 36, auf der rechten Seite: 7 14
+    15 16 17 18 34 35 36 48
+product (50)
+    auf der linken Seite: 37 38 39, auf der rechten Seite: 33 34 35
+    36 38 39
+exponent (51)
+    auf der linken Seite: 40 41, auf der rechten Seite: 37 38 39
+signed (52)
+    auf der linken Seite: 42 43 44, auf der rechten Seite: 40 41
+atomic (53)
+    auf der linken Seite: 45 46 47 48, auf der rechten Seite: 42 43
+    44
+
+
+Zustand 0
+
+    0 $accept: . program $end
+
+    $default  reduziere mit Regel 2 (header)
+
+    program  gehe zu Zustand 1 über
+    header   gehe zu Zustand 2 über
+
+
+Zustand 1
+
+    0 $accept: program . $end
+
+    $end  schiebe und gehe zu Zustand 3 über
+
+
+Zustand 2
+
+    1 program: header . stmtlist trailer
+
+    $default  reduziere mit Regel 4 (stmtlist)
+
+    stmtlist  gehe zu Zustand 4 über
+
+
+Zustand 3
+
+    0 $accept: program $end .
+
+    $default  annehmen
+
+
+Zustand 4
+
+    1 program: header stmtlist . trailer
+    5 stmtlist: stmtlist . stmt
+
+    DEKLARIERE  schiebe und gehe zu Zustand 5 über
+    ID          schiebe und gehe zu Zustand 6 über
+
+    $end      reduziere mit Regel 3 (trailer)
+    $default  reduziere mit Regel 8 ($@1)
+
+    trailer  gehe zu Zustand 7 über
+    stmt     gehe zu Zustand 8 über
+    $@1      gehe zu Zustand 9 über
+
+
+Zustand 5
+
+    6 stmt: DEKLARIERE . ID SEMIKOLON
+
+    ID  schiebe und gehe zu Zustand 10 über
+
+
+Zustand 6
+
+    7 stmt: ID . ASSIGN expr SEMIKOLON
+
+    ASSIGN  schiebe und gehe zu Zustand 11 über
+
+
+Zustand 7
+
+    1 program: header stmtlist trailer .
+
+    $default  reduziere mit Regel 1 (program)
+
+
+Zustand 8
+
+    5 stmtlist: stmtlist stmt .
+
+    $default  reduziere mit Regel 5 (stmtlist)
+
+
+Zustand 9
+
+    9 stmt: $@1 . options klecks
+
+    EKO  schiebe und gehe zu Zustand 12 über
+
+    $default  reduziere mit Regel 10 (options)
+
+    options  gehe zu Zustand 13 über
+
+
+Zustand 10
+
+    6 stmt: DEKLARIERE ID . SEMIKOLON
+
+    SEMIKOLON  schiebe und gehe zu Zustand 14 über
+
+
+Zustand 11
+
+    7 stmt: ID ASSIGN . expr SEMIKOLON
+
+    RKO     schiebe und gehe zu Zustand 15 über
+    ADD     schiebe und gehe zu Zustand 16 über
+    SUB     schiebe und gehe zu Zustand 17 über
+    NUMBER  schiebe und gehe zu Zustand 18 über
+    ID      schiebe und gehe zu Zustand 19 über
+    FLOAT   schiebe und gehe zu Zustand 20 über
+
+    expr      gehe zu Zustand 21 über
+    product   gehe zu Zustand 22 über
+    exponent  gehe zu Zustand 23 über
+    signed    gehe zu Zustand 24 über
+    atomic    gehe zu Zustand 25 über
+
+
+Zustand 12
+
+   11 options: EKO . optionlist EKS
+
+    KOORD      schiebe und gehe zu Zustand 26 über
+    SKALIEREN  schiebe und gehe zu Zustand 27 über
+    DREHEN     schiebe und gehe zu Zustand 28 über
+    FARBE      schiebe und gehe zu Zustand 29 über
+
+    optionlist  gehe zu Zustand 30 über
+    option      gehe zu Zustand 31 über
+
+
+Zustand 13
+
+    9 stmt: $@1 options . klecks
+
+    KREIS    schiebe und gehe zu Zustand 32 über
+    LINIE    schiebe und gehe zu Zustand 33 über
+    DREIECK  schiebe und gehe zu Zustand 34 über
+    QUADRAT  schiebe und gehe zu Zustand 35 über
+
+    klecks  gehe zu Zustand 36 über
+
+
+Zustand 14
+
+    6 stmt: DEKLARIERE ID SEMIKOLON .
+
+    $default  reduziere mit Regel 6 (stmt)
+
+
+Zustand 15
+
+   48 atomic: RKO . expr RKS
+
+    RKO     schiebe und gehe zu Zustand 15 über
+    ADD     schiebe und gehe zu Zustand 16 über
+    SUB     schiebe und gehe zu Zustand 17 über
+    NUMBER  schiebe und gehe zu Zustand 18 über
+    ID      schiebe und gehe zu Zustand 19 über
+    FLOAT   schiebe und gehe zu Zustand 20 über
+
+    expr      gehe zu Zustand 37 über
+    product   gehe zu Zustand 22 über
+    exponent  gehe zu Zustand 23 über
+    signed    gehe zu Zustand 24 über
+    atomic    gehe zu Zustand 25 über
+
+
+Zustand 16
+
+   42 signed: ADD . atomic
+
+    RKO     schiebe und gehe zu Zustand 15 über
+    NUMBER  schiebe und gehe zu Zustand 18 über
+    ID      schiebe und gehe zu Zustand 19 über
+    FLOAT   schiebe und gehe zu Zustand 20 über
+
+    atomic  gehe zu Zustand 38 über
+
+
+Zustand 17
+
+   43 signed: SUB . atomic
+
+    RKO     schiebe und gehe zu Zustand 15 über
+    NUMBER  schiebe und gehe zu Zustand 18 über
+    ID      schiebe und gehe zu Zustand 19 über
+    FLOAT   schiebe und gehe zu Zustand 20 über
+
+    atomic  gehe zu Zustand 39 über
+
+
+Zustand 18
+
+   46 atomic: NUMBER .
+
+    $default  reduziere mit Regel 46 (atomic)
+
+
+Zustand 19
+
+   45 atomic: ID .
+
+    $default  reduziere mit Regel 45 (atomic)
+
+
+Zustand 20
+
+   47 atomic: FLOAT .
+
+    $default  reduziere mit Regel 47 (atomic)
+
+
+Zustand 21
+
+    7 stmt: ID ASSIGN expr . SEMIKOLON
+   34 expr: expr . ADD product
+   35     | expr . SUB product
+   36     | expr . MOD product
+
+    SEMIKOLON  schiebe und gehe zu Zustand 40 über
+    ADD        schiebe und gehe zu Zustand 41 über
+    SUB        schiebe und gehe zu Zustand 42 über
+    MOD        schiebe und gehe zu Zustand 43 über
+
+
+Zustand 22
+
+   33 expr: product .
+   38 product: product . MUL exponent
+   39        | product . DIV exponent
+
+    MUL  schiebe und gehe zu Zustand 44 über
+    DIV  schiebe und gehe zu Zustand 45 über
+
+    $default  reduziere mit Regel 33 (expr)
+
+
+Zustand 23
+
+   37 product: exponent .
+
+    $default  reduziere mit Regel 37 (product)
+
+
+Zustand 24
+
+   40 exponent: signed . EXP signed
+   41         | signed .
+
+    EXP  schiebe und gehe zu Zustand 46 über
+
+    $default  reduziere mit Regel 41 (exponent)
+
+
+Zustand 25
+
+   44 signed: atomic .
+
+    $default  reduziere mit Regel 44 (signed)
+
+
+Zustand 26
+
+   14 option: KOORD . expr TRENNZEICHEN expr
+
+    RKO     schiebe und gehe zu Zustand 15 über
+    ADD     schiebe und gehe zu Zustand 16 über
+    SUB     schiebe und gehe zu Zustand 17 über
+    NUMBER  schiebe und gehe zu Zustand 18 über
+    ID      schiebe und gehe zu Zustand 19 über
+    FLOAT   schiebe und gehe zu Zustand 20 über
+
+    expr      gehe zu Zustand 47 über
+    product   gehe zu Zustand 22 über
+    exponent  gehe zu Zustand 23 über
+    signed    gehe zu Zustand 24 über
+    atomic    gehe zu Zustand 25 über
+
+
+Zustand 27
+
+   15 option: SKALIEREN . expr TRENNZEICHEN expr
+   16       | SKALIEREN . expr
+
+    RKO     schiebe und gehe zu Zustand 15 über
+    ADD     schiebe und gehe zu Zustand 16 über
+    SUB     schiebe und gehe zu Zustand 17 über
+    NUMBER  schiebe und gehe zu Zustand 18 über
+    ID      schiebe und gehe zu Zustand 19 über
+    FLOAT   schiebe und gehe zu Zustand 20 über
+
+    expr      gehe zu Zustand 48 über
+    product   gehe zu Zustand 22 über
+    exponent  gehe zu Zustand 23 über
+    signed    gehe zu Zustand 24 über
+    atomic    gehe zu Zustand 25 über
+
+
+Zustand 28
+
+   17 option: DREHEN . expr
+
+    RKO     schiebe und gehe zu Zustand 15 über
+    ADD     schiebe und gehe zu Zustand 16 über
+    SUB     schiebe und gehe zu Zustand 17 über
+    NUMBER  schiebe und gehe zu Zustand 18 über
+    ID      schiebe und gehe zu Zustand 19 über
+    FLOAT   schiebe und gehe zu Zustand 20 über
+
+    expr      gehe zu Zustand 49 über
+    product   gehe zu Zustand 22 über
+    exponent  gehe zu Zustand 23 über
+    signed    gehe zu Zustand 24 über
+    atomic    gehe zu Zustand 25 über
+
+
+Zustand 29
+
+   18 option: FARBE . expr TRENNZEICHEN expr TRENNZEICHEN expr
+   19       | FARBE . ROT
+   20       | FARBE . BLAU
+   21       | FARBE . GRUEN
+   22       | FARBE . GELB
+   23       | FARBE . ORANGE
+   24       | FARBE . LILA
+   25       | FARBE . PINK
+   26       | FARBE . SCHWARZ
+   27       | FARBE . BRAUN
+   28       | FARBE . GRAU
+
+    RKO      schiebe und gehe zu Zustand 15 über
+    ROT      schiebe und gehe zu Zustand 50 über
+    BLAU     schiebe und gehe zu Zustand 51 über
+    GELB     schiebe und gehe zu Zustand 52 über
+    GRUEN    schiebe und gehe zu Zustand 53 über
+    ORANGE   schiebe und gehe zu Zustand 54 über
+    LILA     schiebe und gehe zu Zustand 55 über
+    PINK     schiebe und gehe zu Zustand 56 über
+    SCHWARZ  schiebe und gehe zu Zustand 57 über
+    BRAUN    schiebe und gehe zu Zustand 58 über
+    GRAU     schiebe und gehe zu Zustand 59 über
+    ADD      schiebe und gehe zu Zustand 16 über
+    SUB      schiebe und gehe zu Zustand 17 über
+    NUMBER   schiebe und gehe zu Zustand 18 über
+    ID       schiebe und gehe zu Zustand 19 über
+    FLOAT    schiebe und gehe zu Zustand 20 über
+
+    expr      gehe zu Zustand 60 über
+    product   gehe zu Zustand 22 über
+    exponent  gehe zu Zustand 23 über
+    signed    gehe zu Zustand 24 über
+    atomic    gehe zu Zustand 25 über
+
+
+Zustand 30
+
+   11 options: EKO optionlist . EKS
+   13 optionlist: optionlist . option
+
+    KOORD      schiebe und gehe zu Zustand 26 über
+    SKALIEREN  schiebe und gehe zu Zustand 27 über
+    DREHEN     schiebe und gehe zu Zustand 28 über
+    EKS        schiebe und gehe zu Zustand 61 über
+    FARBE      schiebe und gehe zu Zustand 29 über
+
+    option  gehe zu Zustand 62 über
+
+
+Zustand 31
+
+   12 optionlist: option .
+
+    $default  reduziere mit Regel 12 (optionlist)
+
+
+Zustand 32
+
+   29 klecks: KREIS . SEMIKOLON
+
+    SEMIKOLON  schiebe und gehe zu Zustand 63 über
+
+
+Zustand 33
+
+   30 klecks: LINIE . SEMIKOLON
+
+    SEMIKOLON  schiebe und gehe zu Zustand 64 über
+
+
+Zustand 34
+
+   31 klecks: DREIECK . SEMIKOLON
+
+    SEMIKOLON  schiebe und gehe zu Zustand 65 über
+
+
+Zustand 35
+
+   32 klecks: QUADRAT . SEMIKOLON
+
+    SEMIKOLON  schiebe und gehe zu Zustand 66 über
+
+
+Zustand 36
+
+    9 stmt: $@1 options klecks .
+
+    $default  reduziere mit Regel 9 (stmt)
+
+
+Zustand 37
+
+   34 expr: expr . ADD product
+   35     | expr . SUB product
+   36     | expr . MOD product
+   48 atomic: RKO expr . RKS
+
+    RKS  schiebe und gehe zu Zustand 67 über
+    ADD  schiebe und gehe zu Zustand 41 über
+    SUB  schiebe und gehe zu Zustand 42 über
+    MOD  schiebe und gehe zu Zustand 43 über
+
+
+Zustand 38
+
+   42 signed: ADD atomic .
+
+    $default  reduziere mit Regel 42 (signed)
+
+
+Zustand 39
+
+   43 signed: SUB atomic .
+
+    $default  reduziere mit Regel 43 (signed)
+
+
+Zustand 40
+
+    7 stmt: ID ASSIGN expr SEMIKOLON .
+
+    $default  reduziere mit Regel 7 (stmt)
+
+
+Zustand 41
+
+   34 expr: expr ADD . product
+
+    RKO     schiebe und gehe zu Zustand 15 über
+    ADD     schiebe und gehe zu Zustand 16 über
+    SUB     schiebe und gehe zu Zustand 17 über
+    NUMBER  schiebe und gehe zu Zustand 18 über
+    ID      schiebe und gehe zu Zustand 19 über
+    FLOAT   schiebe und gehe zu Zustand 20 über
+
+    product   gehe zu Zustand 68 über
+    exponent  gehe zu Zustand 23 über
+    signed    gehe zu Zustand 24 über
+    atomic    gehe zu Zustand 25 über
+
+
+Zustand 42
+
+   35 expr: expr SUB . product
+
+    RKO     schiebe und gehe zu Zustand 15 über
+    ADD     schiebe und gehe zu Zustand 16 über
+    SUB     schiebe und gehe zu Zustand 17 über
+    NUMBER  schiebe und gehe zu Zustand 18 über
+    ID      schiebe und gehe zu Zustand 19 über
+    FLOAT   schiebe und gehe zu Zustand 20 über
+
+    product   gehe zu Zustand 69 über
+    exponent  gehe zu Zustand 23 über
+    signed    gehe zu Zustand 24 über
+    atomic    gehe zu Zustand 25 über
+
+
+Zustand 43
+
+   36 expr: expr MOD . product
+
+    RKO     schiebe und gehe zu Zustand 15 über
+    ADD     schiebe und gehe zu Zustand 16 über
+    SUB     schiebe und gehe zu Zustand 17 über
+    NUMBER  schiebe und gehe zu Zustand 18 über
+    ID      schiebe und gehe zu Zustand 19 über
+    FLOAT   schiebe und gehe zu Zustand 20 über
+
+    product   gehe zu Zustand 70 über
+    exponent  gehe zu Zustand 23 über
+    signed    gehe zu Zustand 24 über
+    atomic    gehe zu Zustand 25 über
+
+
+Zustand 44
+
+   38 product: product MUL . exponent
+
+    RKO     schiebe und gehe zu Zustand 15 über
+    ADD     schiebe und gehe zu Zustand 16 über
+    SUB     schiebe und gehe zu Zustand 17 über
+    NUMBER  schiebe und gehe zu Zustand 18 über
+    ID      schiebe und gehe zu Zustand 19 über
+    FLOAT   schiebe und gehe zu Zustand 20 über
+
+    exponent  gehe zu Zustand 71 über
+    signed    gehe zu Zustand 24 über
+    atomic    gehe zu Zustand 25 über
+
+
+Zustand 45
+
+   39 product: product DIV . exponent
+
+    RKO     schiebe und gehe zu Zustand 15 über
+    ADD     schiebe und gehe zu Zustand 16 über
+    SUB     schiebe und gehe zu Zustand 17 über
+    NUMBER  schiebe und gehe zu Zustand 18 über
+    ID      schiebe und gehe zu Zustand 19 über
+    FLOAT   schiebe und gehe zu Zustand 20 über
+
+    exponent  gehe zu Zustand 72 über
+    signed    gehe zu Zustand 24 über
+    atomic    gehe zu Zustand 25 über
+
+
+Zustand 46
+
+   40 exponent: signed EXP . signed
+
+    RKO     schiebe und gehe zu Zustand 15 über
+    ADD     schiebe und gehe zu Zustand 16 über
+    SUB     schiebe und gehe zu Zustand 17 über
+    NUMBER  schiebe und gehe zu Zustand 18 über
+    ID      schiebe und gehe zu Zustand 19 über
+    FLOAT   schiebe und gehe zu Zustand 20 über
+
+    signed  gehe zu Zustand 73 über
+    atomic  gehe zu Zustand 25 über
+
+
+Zustand 47
+
+   14 option: KOORD expr . TRENNZEICHEN expr
+   34 expr: expr . ADD product
+   35     | expr . SUB product
+   36     | expr . MOD product
+
+    TRENNZEICHEN  schiebe und gehe zu Zustand 74 über
+    ADD           schiebe und gehe zu Zustand 41 über
+    SUB           schiebe und gehe zu Zustand 42 über
+    MOD           schiebe und gehe zu Zustand 43 über
+
+
+Zustand 48
+
+   15 option: SKALIEREN expr . TRENNZEICHEN expr
+   16       | SKALIEREN expr .
+   34 expr: expr . ADD product
+   35     | expr . SUB product
+   36     | expr . MOD product
+
+    TRENNZEICHEN  schiebe und gehe zu Zustand 75 über
+    ADD           schiebe und gehe zu Zustand 41 über
+    SUB           schiebe und gehe zu Zustand 42 über
+    MOD           schiebe und gehe zu Zustand 43 über
+
+    $default  reduziere mit Regel 16 (option)
+
+
+Zustand 49
+
+   17 option: DREHEN expr .
+   34 expr: expr . ADD product
+   35     | expr . SUB product
+   36     | expr . MOD product
+
+    ADD  schiebe und gehe zu Zustand 41 über
+    SUB  schiebe und gehe zu Zustand 42 über
+    MOD  schiebe und gehe zu Zustand 43 über
+
+    $default  reduziere mit Regel 17 (option)
+
+
+Zustand 50
+
+   19 option: FARBE ROT .
+
+    $default  reduziere mit Regel 19 (option)
+
+
+Zustand 51
+
+   20 option: FARBE BLAU .
+
+    $default  reduziere mit Regel 20 (option)
+
+
+Zustand 52
+
+   22 option: FARBE GELB .
+
+    $default  reduziere mit Regel 22 (option)
+
+
+Zustand 53
+
+   21 option: FARBE GRUEN .
+
+    $default  reduziere mit Regel 21 (option)
+
+
+Zustand 54
+
+   23 option: FARBE ORANGE .
+
+    $default  reduziere mit Regel 23 (option)
+
+
+Zustand 55
+
+   24 option: FARBE LILA .
+
+    $default  reduziere mit Regel 24 (option)
+
+
+Zustand 56
+
+   25 option: FARBE PINK .
+
+    $default  reduziere mit Regel 25 (option)
+
+
+Zustand 57
+
+   26 option: FARBE SCHWARZ .
+
+    $default  reduziere mit Regel 26 (option)
+
+
+Zustand 58
+
+   27 option: FARBE BRAUN .
+
+    $default  reduziere mit Regel 27 (option)
+
+
+Zustand 59
+
+   28 option: FARBE GRAU .
+
+    $default  reduziere mit Regel 28 (option)
+
+
+Zustand 60
+
+   18 option: FARBE expr . TRENNZEICHEN expr TRENNZEICHEN expr
+   34 expr: expr . ADD product
+   35     | expr . SUB product
+   36     | expr . MOD product
+
+    TRENNZEICHEN  schiebe und gehe zu Zustand 76 über
+    ADD           schiebe und gehe zu Zustand 41 über
+    SUB           schiebe und gehe zu Zustand 42 über
+    MOD           schiebe und gehe zu Zustand 43 über
+
+
+Zustand 61
+
+   11 options: EKO optionlist EKS .
+
+    $default  reduziere mit Regel 11 (options)
+
+
+Zustand 62
+
+   13 optionlist: optionlist option .
+
+    $default  reduziere mit Regel 13 (optionlist)
+
+
+Zustand 63
+
+   29 klecks: KREIS SEMIKOLON .
+
+    $default  reduziere mit Regel 29 (klecks)
+
+
+Zustand 64
+
+   30 klecks: LINIE SEMIKOLON .
+
+    $default  reduziere mit Regel 30 (klecks)
+
+
+Zustand 65
+
+   31 klecks: DREIECK SEMIKOLON .
+
+    $default  reduziere mit Regel 31 (klecks)
+
+
+Zustand 66
+
+   32 klecks: QUADRAT SEMIKOLON .
+
+    $default  reduziere mit Regel 32 (klecks)
+
+
+Zustand 67
+
+   48 atomic: RKO expr RKS .
+
+    $default  reduziere mit Regel 48 (atomic)
+
+
+Zustand 68
+
+   34 expr: expr ADD product .
+   38 product: product . MUL exponent
+   39        | product . DIV exponent
+
+    MUL  schiebe und gehe zu Zustand 44 über
+    DIV  schiebe und gehe zu Zustand 45 über
+
+    $default  reduziere mit Regel 34 (expr)
+
+
+Zustand 69
+
+   35 expr: expr SUB product .
+   38 product: product . MUL exponent
+   39        | product . DIV exponent
+
+    MUL  schiebe und gehe zu Zustand 44 über
+    DIV  schiebe und gehe zu Zustand 45 über
+
+    $default  reduziere mit Regel 35 (expr)
+
+
+Zustand 70
+
+   36 expr: expr MOD product .
+   38 product: product . MUL exponent
+   39        | product . DIV exponent
+
+    MUL  schiebe und gehe zu Zustand 44 über
+    DIV  schiebe und gehe zu Zustand 45 über
+
+    $default  reduziere mit Regel 36 (expr)
+
+
+Zustand 71
+
+   38 product: product MUL exponent .
+
+    $default  reduziere mit Regel 38 (product)
+
+
+Zustand 72
+
+   39 product: product DIV exponent .
+
+    $default  reduziere mit Regel 39 (product)
+
+
+Zustand 73
+
+   40 exponent: signed EXP signed .
+
+    $default  reduziere mit Regel 40 (exponent)
+
+
+Zustand 74
+
+   14 option: KOORD expr TRENNZEICHEN . expr
+
+    RKO     schiebe und gehe zu Zustand 15 über
+    ADD     schiebe und gehe zu Zustand 16 über
+    SUB     schiebe und gehe zu Zustand 17 über
+    NUMBER  schiebe und gehe zu Zustand 18 über
+    ID      schiebe und gehe zu Zustand 19 über
+    FLOAT   schiebe und gehe zu Zustand 20 über
+
+    expr      gehe zu Zustand 77 über
+    product   gehe zu Zustand 22 über
+    exponent  gehe zu Zustand 23 über
+    signed    gehe zu Zustand 24 über
+    atomic    gehe zu Zustand 25 über
+
+
+Zustand 75
+
+   15 option: SKALIEREN expr TRENNZEICHEN . expr
+
+    RKO     schiebe und gehe zu Zustand 15 über
+    ADD     schiebe und gehe zu Zustand 16 über
+    SUB     schiebe und gehe zu Zustand 17 über
+    NUMBER  schiebe und gehe zu Zustand 18 über
+    ID      schiebe und gehe zu Zustand 19 über
+    FLOAT   schiebe und gehe zu Zustand 20 über
+
+    expr      gehe zu Zustand 78 über
+    product   gehe zu Zustand 22 über
+    exponent  gehe zu Zustand 23 über
+    signed    gehe zu Zustand 24 über
+    atomic    gehe zu Zustand 25 über
+
+
+Zustand 76
+
+   18 option: FARBE expr TRENNZEICHEN . expr TRENNZEICHEN expr
+
+    RKO     schiebe und gehe zu Zustand 15 über
+    ADD     schiebe und gehe zu Zustand 16 über
+    SUB     schiebe und gehe zu Zustand 17 über
+    NUMBER  schiebe und gehe zu Zustand 18 über
+    ID      schiebe und gehe zu Zustand 19 über
+    FLOAT   schiebe und gehe zu Zustand 20 über
+
+    expr      gehe zu Zustand 79 über
+    product   gehe zu Zustand 22 über
+    exponent  gehe zu Zustand 23 über
+    signed    gehe zu Zustand 24 über
+    atomic    gehe zu Zustand 25 über
+
+
+Zustand 77
+
+   14 option: KOORD expr TRENNZEICHEN expr .
+   34 expr: expr . ADD product
+   35     | expr . SUB product
+   36     | expr . MOD product
+
+    ADD  schiebe und gehe zu Zustand 41 über
+    SUB  schiebe und gehe zu Zustand 42 über
+    MOD  schiebe und gehe zu Zustand 43 über
+
+    $default  reduziere mit Regel 14 (option)
+
+
+Zustand 78
+
+   15 option: SKALIEREN expr TRENNZEICHEN expr .
+   34 expr: expr . ADD product
+   35     | expr . SUB product
+   36     | expr . MOD product
+
+    ADD  schiebe und gehe zu Zustand 41 über
+    SUB  schiebe und gehe zu Zustand 42 über
+    MOD  schiebe und gehe zu Zustand 43 über
+
+    $default  reduziere mit Regel 15 (option)
+
+
+Zustand 79
+
+   18 option: FARBE expr TRENNZEICHEN expr . TRENNZEICHEN expr
+   34 expr: expr . ADD product
+   35     | expr . SUB product
+   36     | expr . MOD product
+
+    TRENNZEICHEN  schiebe und gehe zu Zustand 80 über
+    ADD           schiebe und gehe zu Zustand 41 über
+    SUB           schiebe und gehe zu Zustand 42 über
+    MOD           schiebe und gehe zu Zustand 43 über
+
+
+Zustand 80
+
+   18 option: FARBE expr TRENNZEICHEN expr TRENNZEICHEN . expr
+
+    RKO     schiebe und gehe zu Zustand 15 über
+    ADD     schiebe und gehe zu Zustand 16 über
+    SUB     schiebe und gehe zu Zustand 17 über
+    NUMBER  schiebe und gehe zu Zustand 18 über
+    ID      schiebe und gehe zu Zustand 19 über
+    FLOAT   schiebe und gehe zu Zustand 20 über
+
+    expr      gehe zu Zustand 81 über
+    product   gehe zu Zustand 22 über
+    exponent  gehe zu Zustand 23 über
+    signed    gehe zu Zustand 24 über
+    atomic    gehe zu Zustand 25 über
+
+
+Zustand 81
+
+   18 option: FARBE expr TRENNZEICHEN expr TRENNZEICHEN expr .
+   34 expr: expr . ADD product
+   35     | expr . SUB product
+   36     | expr . MOD product
+
+    ADD  schiebe und gehe zu Zustand 41 über
+    SUB  schiebe und gehe zu Zustand 42 über
+    MOD  schiebe und gehe zu Zustand 43 über
+
+    $default  reduziere mit Regel 18 (option)

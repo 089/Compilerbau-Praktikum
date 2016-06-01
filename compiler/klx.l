@@ -6,6 +6,8 @@
 %option yylineno
 
 %%
+Deklariere                                  return DEKLARIERE;   // Deklariert eine Variable
+
 Kreis                                       return KREIS;       // Geometrie; Warnung return 0 bei EOF
 Linie                                       return LINIE;
 Dreieck                                     return DREIECK; 
@@ -28,11 +30,15 @@ Schwarz                                     return SCHWARZ;
 Braun                                       return BRAUN;
 Grau                                        return GRAU;
 
+Wenn                                        return WENN;        // Kontrollstrukturen
+Dann                                        return DANN;
+Kleiner                                     return KLEINER; 
 
 ;                                           return SEMIKOLON;   // Gruppierungszeichen
 \[                                          return EKO;
 \]                                          return EKS;
 @                                           return TRENNZEICHEN;
+,                                           return TRENNZEICHEN;
 \(                                          return RKO;
 \)                                          return RKS;
 
@@ -59,7 +65,7 @@ Grau                                        return GRAU;
 
 \n                                          ;                  // Zeilenumbruch ignorieren[
 [[:space:]]                                 ;                  // Leerzeichen ignorieren
-#.*                                         ;                  // Kommentare
+#.*                                         ;                   // HEX FARBE[a-fA-F0-9]{6}                             return HEXFARBE;
 \/\/.*                                      ;                  // Kommentare
 .                                           fprintf(stderr, "WARNING: '(%d) %s' ignored\n", yylineno, yytext);
 

@@ -8,10 +8,10 @@ lex.yy.c: klx.l
 	flex klx.l
 	
 klx.tab.c: klx.y
-	bison -d klx.y
+	bison -d -v -t klx.y
 	
 klx.tab.h: klx.y
-	bison -d klx.y
+	bison -d -v -t klx.y
 	
 test.ps: klx test.klx
 	./klx < test.klx > test.ps

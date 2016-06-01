@@ -7,9 +7,9 @@ typedef struct node {
   char *symbol;
   int level;
   /* may be other stuff */
-  int defined;
+  int defined; 
   
-}  node;
+} node;
 
 extern node *insert(char *s);
 extern node *lookup(char *s);
