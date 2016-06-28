@@ -53,4 +53,10 @@ Auch für Prozeduren gibt es zwei Schreibvarianten:
 
 Aufgerufen werden können Prozeduren beispielsweise mit dem Ausdruck `prozedurName(1, 2);`
 
+## Schlüsselwörter und weitere Zeichen
+
+1. Variablen werden mit dem Schlüsselwort `Dekla` deklariert und in einem extra Schritt initialisiert. 
+1. Für bool'sche Vergleiche stehen `<, <=, >, >=, <> bzw. !=, ==, &&, ||` zur Verfügung. 
+1. Für die Aritmethik stehen neben Ganzzahlen (z.B. 1, 5, 7) und Kommazahlen (z.B. 0.1, 2.2, 9.13) auch die Zeichen `+, -, *, /, ^, %` in der aus anderen Sprachen bekannten Verwendung zur Verfügung. 
+
 
