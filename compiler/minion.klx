@@ -19,7 +19,7 @@ oy = 700;
 z=50;
 
 // gelber Körper
-[Koord ox,oy Voll Farbe Minion] ·;
+[Koord ox,oy Voll Farbe Minion Skali 0.7] ·;
 [Koord ox,oy-z Voll Farbe Minion] #;
 [Koord ox,oy-2*z Voll Farbe Minion] ·;
 
