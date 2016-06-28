@@ -37,6 +37,20 @@ Bezeichnung | Befehl | ggf. Beschreibung
 ----- | ----- | ----- 
 Wenn-Dann | `Wenn (bool) Dann ...` oder `??(bool) >> ...` | Bool'sche Ausdrücke stehen **immer** in runden Klammern. `...` steht für einen oder mehrere Ausdrücke. Bei mehreren werden geschweifte Klammern benötigt. 
 Wenn-Danndann-Sonst | `Wenn (bool) Danndann ... : ...` oder `??(bool) >>>> ... : ...` | s.o. Wichtig: Der Dann-Ausdruck wird bei Wenn-Danndann-Sonst verdoppelt. 
+Wiederholen | `Wdh x >> ...` oder `» x >> ...` | x beliebige Ganzzahl; entspricht der Anzahl der Wiederholungen des/der nachfolgenden Ausdrucks/Ausdrücke. 
+Während-Schleife | `[[bool]] >> ...` | Führt einen oder mehrere Ausdrücke (`...`) solange aus, wie die Bedingung (bool) erfüllt wird. Bei mehreren -> geschweifte Klammern
 
+## Kommentare
+
+Zeilenkommentare werden mit `//` eingeleitet. Blockkommentare gibt es nicht. 
+
+## Prozeduren
+
+Auch für Prozeduren gibt es zwei Schreibvarianten:
+
+1. `Proz prozedurName(param1, param2) >> { ... }` 
+1. `::prozedurName(param1, param2) >> { ... }` 
+
+Aufgerufen werden können Prozeduren beispielsweise mit dem Ausdruck `prozedurName(1, 2);`
 
 
