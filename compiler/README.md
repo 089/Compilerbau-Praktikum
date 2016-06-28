@@ -7,7 +7,7 @@ In mKLX gibt es oft mehrere Wege zum Ziel. So gibt es für mehrere Ausdrücke ei
 Bezeichnung | symbolisch | geschwätzig | ggf. Beschreibung
 ----- | ----- | ----- | ----- 
 Kreis | ● oder · | Kreis | 
-Dreie | ▲ oder <| | Dreie | Standard-Dreieck, gleichseitig
+Dreie | ▲ oder `<|` | Dreie | Standard-Dreieck, gleichseitig
 Linie | ▂ oder _ | Linie | 
 Quadrat | ▇ oder # | Quadr | 
 
@@ -32,7 +32,7 @@ Bezeichnung | Befehl | ggf. Beschreibung
 Beliebige Farben | `Farbe x, y, z` oder `Farbe Farbname` | x, y, z aus [0; 255], Farbnamen: `Rot, Blau, Gruen, Gelb, Minion, Orang, Lila, Pink, Schwa, Braun, Grau, Weiß`
 
 
-## Bedingungen 
+## Befehle
 
 Wir unterscheiden zwischen dem `Wenn ... Dann`- und dem `Wenn ... Danndann ... Sonst`-Ausdruck.
 
