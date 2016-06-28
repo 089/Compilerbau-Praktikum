@@ -1,0 +1,33 @@
+// Lokale Variablen
+
+Dekla x;
+Dekla y;
+Dekla ifblock;
+
+x = 2;
+
+y = 16;
+ifblock = 1;
+
+// deklaration Prozedur
+
+::dot(x,y) >> {
+    [Koord 100*x, 100*y] #;
+}
+
+Dekla dot;
+
+dot = 5;
+
+// Aufruf Prozedur
+» 5 >> {
+    x=x+0.1;
+    y=y/4;
+    dot(x,y); 
+    }
+
+
+// ??(ifblock == 1) >> { Dekla x; x = 2; [Koord 100*x, 100*y] #; }     
+// [Koord 100*x, 100*y]  <|; 
+
+// y=y+1;

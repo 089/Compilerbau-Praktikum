@@ -1,0 +1,84 @@
+// Minion mithilfe von Klecks
+
+// oben (Kopf)
+Dekla ox; 
+Dekla oy;
+Dekla z;    // "Zoom"
+
+Dekla ta;  // temp. Variablen
+Dekla tb;
+Dekla tc;
+Dekla td;
+Dekla te;
+
+Dekla tx;
+Dekla ty;
+
+ox = 300;
+oy = 700;
+z=50;
+
+// gelber Körper
+[Koord ox,oy Voll Farbe Minion] ·;
+[Koord ox,oy-z Voll Farbe Minion] #;
+[Koord ox,oy-2*z Voll Farbe Minion] ·;
+
+// drei Haare
+ta=-10;     // hier: aktuelle Gradzahl
+tb=10;      // hier: max. Gradzahl
+
+[[ta <= tb]] >> {
+    [Koord ox-ta,oy+z*1.2 Drehe 90+ta Skali 0.3 Ldick 3 Farbe Schwa] _;
+    
+    ta=ta+1;
+}
+
+// Arme und Hände
+ta=1.7; 
+[Koord ox,oy-z*1.5 Voll Skali ta, 0.1 Farbe Minion] #; // Band
+
+[Koord ox-z*ta,oy-z*1.5 Voll Skali 0.2 Farbe Schwa] ·;
+[Koord ox+z*ta,oy-z*1.5 Voll Skali 0.2 Farbe Schwa] ·;
+
+// Auge und Brille
+[Koord ox,oy Voll Skali 1, 0.2 Farbe Schwa] #; // Band
+[Koord ox,oy-5 Voll Skali 1, 0.1 Farbe 0.2,0.2,0.2] #; // Band
+
+[Koord ox,oy Skali 0.4 Ldick 10 Voll Farbe Minion] ·;
+[Koord ox,oy Skali 0.4, 0.25 Voll Farbe Weiß] ·;
+
+[Koord ox,oy Skali 0.4 Ldick 10 Farbe Grau] ·;
+[Koord ox,oy Skali 0.1 Voll Farbe 168/255, 122/255, 81/255] ·;
+[Koord ox,oy Skali 0.05 Voll Farbe Schwa] ·;
+[Koord ox-1,oy+1 Skali 0.02 Voll Farbe Weiß] ·;
+
+// Mund
+[Koord ox,oy-z*0.9+2 Skali 0.4 Voll Farbe Schwa] ·;
+[Koord ox,oy-z*0.9+3 Skali 0.39 Voll Farbe Minion] ·;
+[Koord ox,oy-z*0.9+6 Skali 1, 0.3 Voll Farbe Minion] #;
+
+// Fliege
+ta=-20;       // hier: aktuelle Gradzahl
+tb=20;      // hier: max. Gradzahl
+tc=tb/z;    // hier: delta x,y
+
+[[ta <= tb]] >> {
+    [Koord ox,oy-z*1.7 Drehe ta Skali 0.5 Ldick 3 Farbe Schwa] _;
+    
+    tx = tx + tc;
+    ty = ty + tc;
+    
+    ta=ta+1;
+}
+
+// Hose
+[Koord ox,oy-2.5*z Skali 1, 0.5 Voll Farbe 9/255,118/255,188/255] #;
+
+[Koord ox-z/2,oy-3*z Skali 0.3, 0.5 Voll Farbe 9/255,118/255,188/255] #; // Hosenbein li
+[Koord ox+z/2,oy-3*z Skali 0.3, 0.5 Voll Farbe 9/255,118/255,188/255] #; // Hosenbein re
+
+[Koord ox-z/2,oy-3.5*z Skali 0.3, 0.1 Voll Farbe Schwa] #; // Schuh li
+[Koord ox+z/2,oy-3.5*z Skali 0.3, 0.1 Voll Farbe Schwa] #; // Schuh re
+
+
+

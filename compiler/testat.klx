@@ -1,0 +1,10 @@
+// TESTAT
+Dekla u;
+
+u=2;
+
+ueberdeckung(u);
+
+::ueberdeckung(u) >> {
+    [[u < 5]] >> { [Koord u*50+25,700] ·; u=u+1; }
+}

@@ -16,5 +16,5 @@ extern node *lookup(char *s);
 extern node *delete(char *s);
 extern void scope_open(void);
 extern void scope_close(void);
-
+extern int level;  // geändert 2016-06-15
 #endif

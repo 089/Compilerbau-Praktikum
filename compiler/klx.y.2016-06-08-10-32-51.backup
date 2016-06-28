@@ -1,0 +1,153 @@
+%{
+#include <stdio.h>
+#include "symtab.h"
+extern int yylineno;
+%}
+
+%define parse.error verbose
+
+%union { int i; node *n; double d; }
+
+%token KREIS LINIE DREIECK QUADRAT
+%token KOORD SKALIEREN DREHEN
+%token SEMIKOLON EKO EKS TRENNZEICHEN RKO RKS ASSIGN
+%token DEKLARIERE
+%token FARBE ROT BLAU GELB GRUEN ORANGE LILA PINK SCHWARZ BRAUN GRAU
+%token ADD SUB MUL DIV EXP MOD
+%token WENN DANN SONST 
+%token KLEINER KLEINERGLEICH GROESSER GROESSERGLEICH ISTGLEICH UNGLEICH UND ODER NICHT WAHR FALSCH
+%token ANFANG ENDE
+%token <i> NUMBER
+%token <n> ID
+%token <d> FLOAT
+
+
+%%
+program: header stmtlist trailer;
+
+header: { printf("%%!PS-Adobe\n"); };
+trailer: { printf("\nshowpage\nquit"); };
+
+stmtlist: ;
+stmtlist: stmtlist stmt;
+
+stmt: WENN boolexpr DANN { printf("{"); } stmt { printf("}"); } { printf("if\n "); };
+stmt: ANFANG stmtlist ENDE;
+
+stmt: DEKLARIERE ID SEMIKOLON {
+        // Deklaration von Variablen
+        if($2->defined == 0) {
+            $2->defined = 1;
+            printf("0 /klx_%s def\n", $2->symbol);        
+        } else {
+            char meldung[500];
+            snprintf(meldung, 500, "Variable '%s' ist bereits deklariert.", $2->symbol);
+            yyerror(meldung);
+        }
+    }; 
+    
+stmt: ID ASSIGN error SEMIKOLON { yyerror("Error in assignment"); };
+
+stmt: ID ASSIGN expr SEMIKOLON { 
+        if($1->defined == 1) {
+            printf("/klx_%s exch def\n", $1->symbol); 
+        } else {
+            char meldung[500];
+            snprintf(meldung, 500, "Variable '%s' muss deklariert werden, bevor sie verwendet werden kann.", $1->symbol);
+            yyerror(meldung);
+        }
+    }; 
+
+stmt: { printf("gsave\n"); } options klecks { printf("grestore\n"); };
+
+options: ;
+options: EKO optionlist EKS;
+
+optionlist: option; 
+optionlist: optionlist option;
+
+option: KOORD expr TRENNZEICHEN expr             { printf("translate\n"); };
+
+option: SKALIEREN expr TRENNZEICHEN expr         { printf("scale\n"); };
+option: SKALIEREN expr                           { printf("dup scale\n"); };
+
+option: DREHEN expr                 { printf("rotate\n"); };
+
+option: FARBE expr TRENNZEICHEN expr TRENNZEICHEN expr        { printf("setrgbcolor\n"); };
+
+option: FARBE ROT                   { printf("%f %f %f setrgbcolor\n", 255/255.0, 0/255.0, 0/255.0); };
+option: FARBE BLAU                  { printf("%f %f %f setrgbcolor\n", 0/255.0, 0/255.0, 255/255.0); };
+option: FARBE GRUEN                 { printf("%f %f %f setrgbcolor\n", 0/255.0, 255/255.0, 0/255.0); };
+option: FARBE GELB                  { printf("%f %f %f setrgbcolor\n", 255/255.0, 255/255.0, 0/255.0); };
+option: FARBE ORANGE                { printf("%f %f %f setrgbcolor\n", 255/255.0, 127/255.0, 0/255.0); };
+option: FARBE LILA                  { printf("%f %f %f setrgbcolor\n", 255/255.0, 0/255.0, 255/255.0); };
+option: FARBE PINK                  { printf("%f %f %f setrgbcolor\n", 255/255.0, 0/255.0, 180/255.0); };
+option: FARBE SCHWARZ               { printf("%f %f %f setrgbcolor\n", 0/255.0, 0/255.0, 0/255.0); };
+option: FARBE BRAUN                 { printf("%f %f %f setrgbcolor\n", 139/255.0, 69/255.0, 19/255.0); };
+option: FARBE GRAU                  { printf("%f %f %f setrgbcolor\n", 128/255.0, 128/255.0, 128/255.0); };
+
+klecks:   KREIS SEMIKOLON           { printf("newpath 0 0 50 0 360 arc fill\n"); }; 
+        | LINIE SEMIKOLON           { printf("newpath -50 0 moveto 100 0 rlineto stroke\n"); }; 
+        | DREIECK SEMIKOLON         { printf("newpath -25 -21.65 moveto 25 43.30 rlineto 25 -43.30 rlineto -50 0 rlineto stroke\n"); }; 
+        | QUADRAT SEMIKOLON         { printf("newpath -50 -50 moveto 0 100 rlineto 100 0 rlineto 0 -100 rlineto -100 0 rlineto stroke\n"); }; 
+
+expr: product;
+expr: expr ADD product { printf("add "); };
+expr: expr SUB product { printf("sub "); };
+expr: expr MOD product { printf("mod "); };
+
+product: exponent;
+product: product MUL exponent { printf("mul "); };
+product: product DIV exponent { printf("div "); };
+
+exponent: signed EXP signed { printf("exp "); };
+exponent: signed;
+
+signed: ADD atomic;
+signed: SUB atomic { printf("neg "); };
+signed: atomic;
+
+atomic: ID { 
+        if($1->defined == 1) {
+            printf("klx_%s ", $1->symbol); 
+        } else {
+            char meldung[500];
+            snprintf(meldung, 500, "Variable '%s' muss deklariert werden, bevor sie verwendet werden kann.", $1->symbol);
+            yyerror(meldung);
+        }
+    }; 
+
+atomic: NUMBER { printf("%d ", $1); };
+atomic: FLOAT { printf("%f ", $1); };
+atomic: RKO expr RKS;
+
+boolexpr: boolproduct;
+boolexpr: expr KLEINER boolproduct { printf("lt "); };
+boolexpr: expr KLEINERGLEICH boolproduct { printf("le "); };
+boolexpr: expr GROESSER boolproduct { printf("gt "); };
+boolexpr: expr GROESSERGLEICH boolproduct { printf("ge "); };
+boolexpr: expr ISTGLEICH boolproduct { printf("eq "); };
+boolexpr: expr UNGLEICH boolproduct { printf("neq "); };
+boolexpr: expr NICHT boolproduct { printf("not "); };
+boolexpr: expr ODER boolproduct { printf("or "); };
+
+boolproduct: boolatomic;
+boolproduct: boolproduct UND boolatomic { printf("and "); };
+
+boolatomic: WAHR { printf("true "); };
+boolatomic: FALSCH { printf("false "); };
+boolatomic: RKO boolexpr RKS; 
+
+
+%% 
+
+int yyerror(char *msg) {
+    fprintf(stderr, "Error: (%d) %s\n", yylineno, msg);
+    return 0;
+}
+
+int main(void) {
+    yydebug=0;
+    yyparse();
+    return 0;    
+}

@@ -1,38 +1,95 @@
+// KLECKSZEICHEN
+// ▲   ▇   ●   ▂   
+// <|  #   ·   _
 
-Deklariere x;
-Deklariere y;
-x = 100;
-y = 2^10 / 8;
+Dekla x;
+Dekla y;
+Dekla c; 
+Dekla rx; 
+Dekla drehen; 
+Dekla anzahl; 
+Dekla so;
 
-Wenn x Kleiner 10  dann
-    [Koord x, y Skalieren 200 Farbe 1.1, 0.5, 0.33] Dreieck;
+x = 120;
+y = 120;
 
+c = 0.0;
+rx = 0;
+drehen = 0;
+anzahl = 11;
 
-# [Koord 100, 600 Skalieren 200, 200 Farbe 1.1, 0.5, 0.33] Dreieck;
+so = 100;
 
-# [Koord 300, 300 Skalieren 2.9, (190 + 10)/100 Farbe Rot] Quadrat;
-
-# [Koord 300, x  Farbe 155/255, 155/255, 55*2+1/255 Drehen 180 - 45 + 66 % 360] Quadrat; 
+// >> { [Koord 600, so+100 Voll Farbe Rot] ·; so=so+50; } [[so < y + 400]]
   
-# [Koord 200, 500 Skalieren 3, 3] Linie; 
+  [[so < y + 400]]
+  >> {
+    [Koord 600, so+100 Voll Farbe Rot] ·;
+    
+    so=so+50;
+  }
 
-# [Farbe Rot Koord 100, 200] Kreis;
+» anzahl >> {
+    [Koord rx+30,750 Skali 0.50 Farbe c,c,c] ▇;
+    [Koord rx+30,750 Skali 0.45 Farbe c,c,c] ·;
+    [Koord rx+30,750 Skali 0.40 Voll Drehe drehen Farbe 0.5-c,0.5-c,0.5-c] <|;
+    
+    
+    [Koord rx+30,50 Skali 0.50 Farbe 0.5-c,0.5-c,0.5-c] ▇;
+    [Koord rx+30,50 Skali 0.45 Farbe 0.5-c,0.5-c,0.5-c] ·;
+    [Koord rx+30,50 Skali 0.40 Voll Drehe drehen Farbe c,c,c] <|;
+    
+    drehen = drehen + (360 / anzahl);
+    rx = rx + 55;
+    c = c + 0.05;
+}
 
-# [Koord 100, 400 Skalieren 1, 2 Farbe Lila] Kreis;
 
-# [Farbe Grau Koord 0, 600] Linie;
-# [Koord x, y] Quadrat;
-# [Koord x, (y - 70) Drehen 45 Farbe Grau] Quadrat;
-# [Koord (x + 10), (y + 10) Farbe Rot] Quadrat;
-# [Koord (x + 20), (y + 20) Farbe Gelb] Quadrat;
-# [Koord (x + 30), (y + 30) Farbe Blau] Quadrat;
-# [Koord (x + 40), (y + 40) Farbe Gruen] Quadrat;
-# [Koord (x + 50), (y + 50) Farbe Orange] Quadrat;
-# [Koord (x + 60), (y + 60) Farbe Lila] Quadrat;
-# [Koord (x + 70), (y + 70) Farbe Pink] Quadrat;
-# [Koord (x + 80), (y + 80) Farbe Schwarz] Quadrat;
-# [Koord (x + 90), (y + 90) Farbe Braun] Quadrat;
+??(x == y) >> [Koord 100, 600 Skali 2, 2 Farbe Lila Voll] ●;
 
-# [Koord 200, 600 Drehen 170 % 360 Farbe Rot Skalieren 3] Dreieck;
+?? (x < y) >>>>
+  [Koord x, y Skali 2 Farbe 1.1, 0.5, 0.33] ▲; 
+  :
+  {
+  [Ldick 3 Koord x+100, y+300 Skali 3 Farbe Gruen] ▇;
+  [Koord x+100, y+300 Skali 3 Drehe 45 % 360 Farbe 0.0, 0.7, 0.2] ▂;
+  
+  » 3 >> {
+  x=x+50;
+  » 2 >> y=y-33;
+  [Koord x+100, y+300 Skali 3 Farbe 0.2, 0.5, 0.7] #;
+  [Koord x+100, y+300 Skali 3 Drehe 45 % 360 Farbe 0.2, 0.5, 0.7] _;
+  [Koord x+100, y+300 Skali 3 Drehe 45 % 360 Farbe 0.2, 0.5, 0.7] <|;
+  }
+  }
 
-# hello
+_;
+ 
+
+' [Koord z, 600 Skali 200, 200 Farbe 1.1, 0.5, 0.33] ▲;
+
+' [Koord 300, 300 Skali 2.9, (190 + 10)/100 Farbe Rot] ▇;
+
+' [Koord 300, x  Farbe 155/255, 155/255, 55*2+1/255 Drehe 180 - 45 + 66 % 360] ▇; 
+  
+' [Koord 200, 500 Skali 3, 3] _; 
+
+' [Farbe Rot Koord 100, 200] ●;
+
+
+' [Farbe Grau Koord 0, 600] _;
+' [Koord x, y] ▇;
+' [Koord x, (y - 70) Drehe 45 Farbe Grau] ▇;
+' [Koord (x + 10), (y + 10) Farbe Rot] ▇;
+' [Koord (x + 20), (y + 20) Farbe Gelb] ▇;
+' [Koord (x + 30), (y + 30) Farbe Blau] ▇;
+' [Koord (x + 40), (y + 40) Farbe Gruen] ▇;
+' [Koord (x + 50), (y + 50) Farbe Orang] ▇;
+' [Koord (x + 60), (y + 60) Farbe Lila] ▇;
+' [Koord (x + 70), (y + 70) Farbe Pink] ▇;
+' [Koord (x + 80), (y + 80) Farbe Schwa] ▇;
+' [Koord (x + 90), (y + 90) Farbe Braun] ▇;
+
+' [Koord 200, 600 Drehe 170 % 360 Farbe Rot Skali 3] ▲;
+
+' hello

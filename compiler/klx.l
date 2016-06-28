@@ -6,41 +6,84 @@
 %option yylineno
 
 %%
-Deklariere                                  return DEKLARIERE;   // Deklariert eine Variable
+Dekla                                       return DEKLARIERE;   // Deklariert eine Variable
 
 Kreis                                       return KREIS;       // Geometrie; Warnung return 0 bei EOF
+●                                           return KREIS;       // Geometrie; Warnung return 0 bei EOF
+·                                           return KREIS;       // Geometrie; Warnung return 0 bei EOF
+
 Linie                                       return LINIE;
-Dreieck                                     return DREIECK; 
-Quadrat                                     return QUADRAT;
+▂                                           return LINIE;
+_                                           return LINIE;
 
-Drehen                                      return DREHEN;      // Transformationen
-Skalieren                                   return SKALIEREN;
+Dreie                                       return DREIECK; 
+▲                                           return DREIECK; 
+\<\|                                        return DREIECK; 
+
+Quadr                                       return QUADRAT;
+▇                                           return QUADRAT;
+#                                           return QUADRAT;
+
+
+Drehe                                       return DREHEN;      // Optionen
+Skali                                       return SKALIEREN;
 Koord                                       return KOORD;
-
+Ldick                                       return LINIENDICKE;
+Voll                                        return GEFUELLT;
+Sanft                                       return NICHTGEFUELLT;
 
 Farbe                                       return FARBE;       // Farben
 Rot                                         return ROT;
 Blau                                        return BLAU;
 Gruen                                       return GRUEN;
 Gelb                                        return GELB;
-Orange                                      return ORANGE;
+Minion                                      return MINION;
+Orang                                       return ORANGE;
 Lila                                        return LILA;
 Pink                                        return PINK;
-Schwarz                                     return SCHWARZ;
+Schwa                                       return SCHWARZ;
 Braun                                       return BRAUN;
 Grau                                        return GRAU;
+Weiß                                        return WEISS;
 
 Wenn                                        return WENN;        // Kontrollstrukturen
-Dann                                        return DANN;
-Kleiner                                     return KLEINER; 
+\?\?                                        return WENN;
+Dann                                        return DANN;    
+\>\>                                        return DANN;
+Danndann                                    return DANNDANN;
+\>\>\>\>                                    return DANNDANN;
+    
+Wdh                                         return WIEDERHOLEN;
+»                                           return WIEDERHOLEN;
+
+\?                                          return FRAGEZEICHEN;
+\<                                          return KLEINER;     // Boolsche Ausdrücke
+\<=                                         return KLEINERGLEICH;
+\>                                          return GROESSER;
+\>=                                         return GROESSERGLEICH;
+==                                          return ISTGLEICH;
+!=                                          return UNGLEICH;
+\<\>                                        return UNGLEICH;
+&&                                          return UND;
+\|\|                                        return ODER;
+!                                           return NICHT;
+Wahr                                        return WAHR;
+Falsch                                      return FALSCH;
 
 ;                                           return SEMIKOLON;   // Gruppierungszeichen
-\[                                          return EKO;
-\]                                          return EKS;
-@                                           return TRENNZEICHEN;
+:                                           return DOPPELPUNKT;
 ,                                           return TRENNZEICHEN;
+@                                           return TRENNZEICHEN;
 \(                                          return RKO;
 \)                                          return RKS;
+\[                                          return EKO;
+\]                                          return EKS;
+\[\[                                        return DEKO;
+\]\]                                        return DEKS;
+\{                                          return GKO;
+\}                                          return GKS;
+Proz                                        return PROZEDUR;
+::                                          return PROZEDUR;                              
 
 
 \+                                          return ADD;        // Mathezeugs
@@ -60,12 +103,12 @@ Kleiner                                     return KLEINER;
 
 
 0|[1-9][0-9]* yylval.i=atoi(yytext);        return NUMBER;
-0|[1-9][0-9]*\.[0-9]+ yylval.d=atof(yytext);return FLOAT;
+(0|[1-9][0-9]*)\.[0-9]+ yylval.d=atof(yytext);return FLOAT;
 
 
 \n                                          ;                  // Zeilenumbruch ignorieren[
 [[:space:]]                                 ;                  // Leerzeichen ignorieren
-#.*                                         ;                   // HEX FARBE[a-fA-F0-9]{6}                             return HEXFARBE;
+'.*                                         ;                   //
 \/\/.*                                      ;                  // Kommentare
 .                                           fprintf(stderr, "WARNING: '(%d) %s' ignored\n", yylineno, yytext);
 

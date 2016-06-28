@@ -1,5 +1,5 @@
 
-all: klx test.ps
+all: klx minion.ps
 
 klx: lex.yy.c klx.tab.c klx.tab.h symtab.h symtab.c
 	gcc lex.yy.c klx.tab.c symtab.c -lfl -o klx
@@ -15,6 +15,15 @@ klx.tab.h: klx.y
 	
 test.ps: klx test.klx
 	./klx < test.klx > test.ps
+	
+minion.ps: klx minion.klx
+	./klx < minion.klx > test.ps
+	
+lokalevariablen.ps: klx lokalevariablen.klx
+	./klx < lokalevariablen.klx > test.ps
+	
+testat.ps: klx testat.klx
+	./klx < testat.klx > test.ps
 	
 clean: 
 	rm -f test.ps klx.tab.* lex.yy.c klx 

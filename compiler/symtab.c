@@ -6,7 +6,7 @@
 
 #define HSIZE 211
 
-static int level=0;
+int level=0; // geändert 2016-06-15
 static node *table[HSIZE] = {0};
 
 static unsigned int hvalue(char *s)
